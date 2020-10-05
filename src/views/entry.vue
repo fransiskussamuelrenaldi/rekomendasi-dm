@@ -1,7 +1,7 @@
 <template>
-  <div>
-    gatau jir apaan
-    <div class="container mx-auto px-4 py-12 flex justify-center">
+  <div class="">
+    <Nav></Nav>
+    <div class="container mx-auto px-12 py-12 flex">
       <user-form></user-form>
     </div>
     <span v-if="list.length">REKOMENDASI WOY</span>
@@ -19,6 +19,7 @@
 
 <script>
 import userForm from '../components/user-form'
+import Nav from '../components/navbar'
 export default {
   data () {
     return {
@@ -26,7 +27,8 @@ export default {
     }
   },
   components: {
-    userForm
+    userForm,
+    Nav
   },
   methods: {
     herbal (val) {

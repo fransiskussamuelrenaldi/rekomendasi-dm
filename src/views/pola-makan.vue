@@ -1,7 +1,7 @@
 <template>
-  <div class="container text-left px-12 mx-12">
-    <p class="text-2xl"> Pola Makan </p>
-    <div class="mt-4">
+  <div class="container text-left">
+    <!-- <p class="text-2xl"> Pola Makan </p> -->
+    <div class="">
       <div class="group-input">
         <span class="text-gray-700">{{ f.isDoing.question }}</span>
         <div class="mt-2">
@@ -35,7 +35,7 @@
     </div>
     <button
       @click="nextPage"
-      :class="['my-6 bg-transparent text-gray-700 font-semibold py-2 px-4 border border-gray-500 rounded']">
+      :class="['mt-6 bg-transparent text-gray-700 font-semibold py-2 px-4 border border-gray-500 rounded']">
       Rekomendasi
     </button>
   </div>

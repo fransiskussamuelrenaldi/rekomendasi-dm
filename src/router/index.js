@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-const Entry = () => import(/* webpackChunkName: "entry" */ '../views/entry')
+const Entry = () => import(/* webpackChunkName: "entry" */ '../views/entry copy')
 const Herbal = () => import(/* webpackChunkName: "entry" */ '../views/herbal')
 const PolaMakan = () => import(/* webpackChunkName: "entry" */ '../views/pola-makan')
 const Fisik = () => import(/* webpackChunkName: "entry" */ '../views/fisik')
@@ -36,7 +36,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: 'https://paulinavita.github.io/',
+  base: process.env.BASE_URL,
   routes
 })
 

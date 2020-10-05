@@ -1,7 +1,7 @@
 <template>
-  <div class="container text-left px-12 mx-12">
-    <p class="text-2xl"> Obat </p>
-    <div class="mt-4">
+  <div class="container text-left">
+    <!-- <p class="text-2xl"> Obat </p> -->
+    <div class="">
       <div class="group-input">
         <span class="text-gray-700">{{ o.isUsingMed.question }}</span>
         <div class="mt-2">
@@ -242,7 +242,7 @@
       </template>
     <button
       @click="nextPage"
-      :class="['my-6 bg-transparent text-gray-700 font-semibold py-2 px-4 border border-gray-500 rounded']">
+      :class="['mt-6 bg-transparent text-gray-700 font-semibold py-2 px-4 border border-gray-500 rounded']">
       Rekomendasi
     </button>
     </div>
@@ -261,12 +261,12 @@ export default {
         },
         isBadExp: {
           question: 'Apakah pasien memiliki pengalaman tidak menyenangkan terkait dengan penggunaan obat?',
-          keyword: 'Penalaman tidakk menyenangkan',
+          keyword: 'Penalaman tidak menyenangkan',
           val: null
         },
         isEso: {
           question: 'Apakah ada masalah dengan efek samping yang diterima setelah minum obat?',
-          keyword: 'ESO',
+          keyword: 'Efek samping',
           val: null
         },
         isEsoTolerable: {
@@ -286,7 +286,7 @@ export default {
         },
         isTraumatic: {
           question: 'Apakah pasien merasa trauma / depresi / tertekan saat menggunakan obat?',
-          keyword: 'Trauma obat',
+          keyword: 'Trauma/depresi/tertekan',
           val: null
         },
         isLifeOrFamProb: {
@@ -311,7 +311,7 @@ export default {
         },
         isForget: {
           question: 'Apakah pasien sering lupa menggunakan obat?',
-          keyword: 'Lupa minum obat',
+          keyword: 'Lupa menggunakan obat',
           val: null
         },
         isLivingWithFam: {
@@ -430,12 +430,9 @@ export default {
         if (this.o.isBadExp.val) {
           if (this.o.isEso.val !== null) { // has eso problems
             if (this.o.isEsoTolerable.val !== null) {
-              console.log('tolerable ga null')
               if (this.o.isEsoTolerable.val) {
-                console.log('masuk teolerable')
                 listRecc.push(this.drugRec.isSupportContinue.rec)
               } else if (!this.o.isEsoTolerable.val && this.o.isEsoTolerable.val !== null) {
-                console.log('bawah')
                 if (this.o.isEsoHandled.val) {
                   listRecc.push(this.drugRec.isChangeMedAndMonitor.rec)
                   listRecc.push(this.drugRec.isNoticeEsoTable.rec)
@@ -443,9 +440,7 @@ export default {
                   listRecc.push(this.drugRec.isEsoMustConsult.rec)
                 }
               }
-              console.log('outt')
               if (this.o.isOrganolepticProb.val !== null) { // has organo probs
-                console.log('masuk organo')
                 if (this.o.isSizeProblem.val) {
                   listRecc.push(this.drugRec.isNeedChangeBrand.rec)
                 }
@@ -462,7 +457,6 @@ export default {
           traumaticRelatedRecc = this.getTraumaticLogic
         }
       }
-      console.log(listRecc, '...')
       return [...listRecc, ...traumaticRelatedRecc]
     },
     getTraumaticLogic () {
@@ -509,18 +503,6 @@ export default {
         } else if (!this.o.isBusy.val && this.o.isBusy.val !== null) {
           listRecc.push(this.drugRec.isCounselling.rec)
         }
-
-        // if (this.o.isForget.val !== null) {
-        //   if (this.o.isLivingWithFam.val) {
-        //     listRecc.push(this.drugRec.isFamilyPMO.rec)
-        //   }
-
-        //   if (this.o.isBusy.val) {
-        //     listRecc.push(this.drugRec.isUseAlarm.rec)
-        //   } else {
-        //     listRecc.push(this.drugRec.isCounselling.rec)
-        //   }
-        // }
       }
       return listRecc
     }
@@ -528,53 +510,12 @@ export default {
   methods: {
     nextPage () {
       this.$emit('obat', this.getRecList)
+    },
+    constructPayload (rec = {}, question = {}) {
+      return {
+        rec: ''
+      }
     }
   }
 }
 </script>
-
-            // if (this.o.isEsoTolerable.val) {
-            //   listRecc.push(this.drugRec.isSupportContinue.rec)
-            // } else if (!this.o.isEsoTolerable.val && this.o.isEsoTolerable.val !== null) {
-            //   if (this.o.isEsoHandled.val) {
-            //     listRecc.push(this.drugRec.isChangeMedAndMonitor.rec)
-            //   } else if (!this.o.isEsoHandled.val && this.o.isEsoHandled.val !== null) {
-            //     listRecc.push(this.drugRec.isEsoMustConsult.rec)
-            //   }
-              // listRecc.push(this.drugRec.isNoticeEsoTable.rec)
-            // }
-          // } else if (!this.o.isEso && this.o.isEso.val !== null) {
-            // console.log('masuk masalah eso')
-            // if (this.o.isOrganolepticProb.val) {
-            //   listRecc.push(this.drugRec.isSolveProblem.rec)
-            // } else if (!this.o.isOrganolepticProb.val && this.o.isOrganolepticProb.val !== null) {
-            //   if (this.o.isSizeProblem.val) {
-            //     listRecc.push(this.drugRec.isChangeMed.rec)
-            //   }
-
-            //   if (this.o.isSmellProblem.val || this.o.isTasteProblem.val) {
-            //     listRecc.push(this.drugRec.isConsumeWithFood.rec)
-            //   }
-
-            //   if (this.o.isTraumatic.val) {
-            //     if (this.o.isLifeOrFamProb.val) {
-            //       listRecc.push(this.drugRec.isDoCounselling.rec)
-            //     } else if (this.o.isEconProb && this.o.isEconProb !== null) {
-            //       listRecc.push(this.drugRec.isUseInsurance.rec)
-            //     }
-            //   } else if (!this.o.isTraumatic.val) {
-            //     if (this.o.isLazy.val) {
-            //       // tbc==
-            //     } else {
-            //       if (this.o.isForget.val !== null) {
-            //         if (!this.o.isFamilyPMO.val) listRecc.push(this.drugRec.isFamilyPMO.rec)
-            //         if (this.o.isBusy.val) {
-            //           listRecc.push(this.drugRec.isUseAlarm.rec)
-            //         } else if (!this.o.isBusy.val && this.o.isBusy.val !== null) {
-            //           listRecc.push(this.drugRec.isFamilyPMO.rec)
-            //         }
-            //       }
-            //     }
-            //   }
-            // }
-          // }
