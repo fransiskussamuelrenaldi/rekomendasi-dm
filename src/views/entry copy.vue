@@ -62,12 +62,10 @@
         </div>
       </div>
     </nav>
-    <!-- contaienr starts -->
-    <div v-if="!isResumeOpen">
-      <div
-        class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16"
-      >
-        <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
+    <!-- container starts -->
+    <div class="whole-container container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+      <template v-if="!isResumeOpen">
+        <div class="left-sidebar-pointers w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
           <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p>
           <div class="block lg:hidden sticky inset-0">
             <button
@@ -150,8 +148,18 @@
               </li>
             </ul>
           </div>
+          <!-- TODO fix this not showing -->
+          <div
+            class="w-full lg:w-4/5 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12"
+          >
+            <span class="text-base text-orange-600 font-bold"></span>
+            <a
+              href="#"
+              class="text-base md:text-sm text-orange-600 font-bold no-underline hover:underline"
+              >Kembali ke atas</a
+            >
+          </div>
         </div>
-
         <section class="w-full lg:w-4/5">
           <h1
             class="flex items-center font-bold break-normal text-gray-700 px-2 text-xl mt-12 lg:mt-0 md:text-2xl"
@@ -223,19 +231,27 @@
               </ol>
             </template>
           </div>
+        </section>
+      </template>
+      <template v-else>
+        <resume ref="resumeData" :patientData="patientData" :summary="coba"></resume>
+      </template>
 
-          <hr class="bg-gray-300 my-12" />
-          <h2 class="font-bold break-normal text-gray-700 px-2 pb-8 text-xl">
-            Tindak Lanjut
-          </h2>
-          <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-            <blockquote
-              class="border-l-4 border-orange-600 italic my-4 pl-8 md:pl-12"
-            >
-              Pastikan bahwa seluruh data sudah terisi dengan benar dan
-              rekomendasi sudah muncul pada halaman ini untuk melanjutkan
-            </blockquote>
-            <div class="pt-8">
+      <!-- footer and disclaimers -->
+      <template>
+       <div class="left-sidebar-pointers w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal"></div>
+       <section class="w-full lg:w-4/5">
+        <hr class="bg-gray-300 my-12" />
+        <h2 v-if="!isResumeOpen" class="font-bold break-normal text-gray-700 px-2 pb-8 text-xl">
+          Tindak Lanjut
+        </h2>
+        <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+          <blockquote class="border-l-4 border-orange-600 italic my-4 pl-8 md:pl-12">
+            Pastikan bahwa seluruh data sudah terisi dengan benar dan
+            rekomendasi sudah muncul pada halaman ini untuk melanjutkan
+          </blockquote>
+          <div class="pt-8">
+            <template v-if="!isResumeOpen">
               <button
                 :disable="!isGoToResumeEnable"
                 :class="[
@@ -247,23 +263,27 @@
               >
                 View Resume
               </button>
-            </div>
+            </template>
+            <template v-else>
+              <button
+                @click="copyToClipboard"
+                class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
+                type="button"
+              >
+                Copy
+              </button>
+               <button
+                class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
+                type="button"
+              >
+                Print
+              </button>
+            </template>
           </div>
-          <div
-            class="w-full lg:w-4/5 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12"
-          >
-            <span class="text-base text-orange-600 font-bold"></span>
-            <a
-              href="#"
-              class="text-base md:text-sm text-orange-600 font-bold no-underline hover:underline"
-              >Kembali ke atas</a
-            >
-          </div>
-        </section>
-      </div>
-    </div>
-    <div v-else>
-      <resume :patientData="patientData" :summary="reccList"></resume>
+        </div>
+      </section>
+      </template>
+      <!-- end footer and disclaimers -->
     </div>
   </div>
 </template>
@@ -278,6 +298,9 @@ import fisik from '../views/fisik'
 export default {
   data () {
     return {
+      coba: {
+        rec: 'wkwkkw'
+      },
       reccList: [],
       patientData: {
         firstName: '',
@@ -287,7 +310,7 @@ export default {
         weight: '',
         address: ''
       },
-      isResumeOpen: false
+      isResumeOpen: true
     }
   },
   components: {
@@ -327,6 +350,22 @@ export default {
     setPatientInput (obj) {
       const key = Object.keys(obj)[0]
       this.patientData[key] = obj[key]
+    },
+    copyToClipboard () {
+      // TODO: Continue with UI
+      const el = document.createElement('textarea')
+
+      el.value = document.querySelector('#resumeContent').innerHTML
+      document.body.appendChild(el)
+      el.select()
+      try {
+        document.execCommand('copy')
+        alert('Testing code was copied ' + el.value)
+      } catch (error) {
+        alert('Oops, unable to copy')
+      } finally {
+        document.body.removeChild(el)
+      }
     }
   }
 }
