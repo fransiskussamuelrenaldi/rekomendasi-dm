@@ -140,6 +140,19 @@
                 class="py-1 md:my-2 hover:bg-orange-100 lg:hover:bg-transparent border-l-4 border-transparent"
               >
                 <a
+                  href="#section4"
+                  class="block pl-4 align-middle text-gray-700 no-underline hover:text-orange-600"
+                >
+                  <span class="pb-1 md:pb-0 text-sm"
+                    >Pemeriksaan Kesehatan </span
+                  >
+                </a>
+              </li>
+
+              <li
+                class="py-1 md:my-2 hover:bg-orange-100 lg:hover:bg-transparent border-l-4 border-transparent"
+              >
+                <a
                   href="#section5"
                   class="block pl-4 align-middle text-gray-700 no-underline hover:text-orange-600"
                 >
@@ -198,7 +211,7 @@
             Pengaturan Pola Makan
           </h2>
           <div id="section4" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-            <pola-makan @pola-makan="pola - makan"></pola-makan>
+            <pola-makan @pola-makan="polaMakan"></pola-makan>
           </div>
 
           <hr class="bg-gray-300 my-12" />
@@ -213,9 +226,18 @@
           <hr class="bg-gray-300 my-12" />
 
           <h2 class="font-bold break-normal text-gray-700 px-2 pb-8 text-xl">
-            Rekomendasi Akhir dan Identifikasi Masalah
+            Pemeriksaan Kesehatan
           </h2>
           <div id="section6" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+            <pemeriksaan-kes @pemeriksaan-kes="pemeriksaanKes"></pemeriksaan-kes>
+          </div>
+
+          <hr class="bg-gray-300 my-12" />
+
+          <h2 class="font-bold break-normal text-gray-700 px-2 pb-8 text-xl">
+            Rekomendasi Akhir dan Identifikasi Masalah
+          </h2>
+          <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
             <template>
               <p>Rekomendasi :</p>
               <ul v-for="(item, index) in reccList" :key="index + 'rec'">
@@ -234,7 +256,7 @@
         </section>
       </template>
       <template v-else>
-        <resume ref="resumeData" :patientData="patientData" :summary="coba"></resume>
+        <resume ref="resumeData" :patientData="patientData" :summary="reccList"></resume>
       </template>
 
       <!-- footer and disclaimers -->
@@ -253,6 +275,7 @@
           <div class="pt-8">
             <template v-if="!isResumeOpen">
               <button
+                @click="showResumePage"
                 :disable="!isGoToResumeEnable"
                 :class="[
                   !isGoToResumeEnable
@@ -296,12 +319,11 @@ import herbal from '../views/herbal'
 import obat from '../views/obat'
 import polaMakan from '../views/pola-makan'
 import fisik from '../views/fisik'
+import pemeriksaanKes from '../views/pemeriksaan-kes'
+
 export default {
   data () {
     return {
-      coba: {
-        rec: 'wkwkkw'
-      },
       reccList: [],
       patientData: {
         firstName: '',
@@ -311,7 +333,7 @@ export default {
         weight: '',
         address: ''
       },
-      isResumeOpen: true
+      isResumeOpen: false
     }
   },
   components: {
@@ -320,6 +342,7 @@ export default {
     obat,
     polaMakan,
     fisik,
+    pemeriksaanKes,
     resume
   },
   computed: {
@@ -347,6 +370,12 @@ export default {
     },
     obat (val) {
       this.reccList = val
+    },
+    pemeriksaanKes (val) {
+      this.reccList = val
+    },
+    showResumePage () {
+      this.isResumeOpen = true
     },
     setPatientInput (obj) {
       const key = Object.keys(obj)[0]

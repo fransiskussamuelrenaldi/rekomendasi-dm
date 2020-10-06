@@ -9,7 +9,12 @@
     <p> Alamat : {{ patientData.address }}</p>
 
     <hr class="bg-gray-300 my-12" />
-    {{summary}}
+    <p>Rekomendasi :</p>
+    <ul v-for="(item, index) in summary" :key="index + 'rec'">
+      {{
+        item
+      }}
+    </ul>
   </div>
 </template>
 
@@ -23,8 +28,8 @@ export default {
     },
     summary: {
       required: true,
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
     }
   }
 }
