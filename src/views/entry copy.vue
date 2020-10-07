@@ -220,7 +220,7 @@
             Pengaturan Aktifitas Fisik
           </h2>
           <div id="section5" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-            <fisik></fisik>
+            <fisik @fisik="fisik"></fisik>
           </div>
 
           <hr class="bg-gray-300 my-12" />
@@ -239,24 +239,21 @@
           </h2>
           <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
             <template>
-              <p>Rekomendasi :</p>
-              <ul v-for="(item, index) in reccList" :key="index + 'rec'">
-                {{
-                  item
-                }}
-              </ul>
-              <p>Identifikasi Masalah :</p>
-              <ol v-for="(item, index) in reccList" :key="index + 'keyword'">
-                {{
-                  item.keyword
-                }}
-              </ol>
+              <p class="text-lg">Rekomendasi</p>
+              <ul v-for="(item, index) in obatRec" :key="index + 'obat'"> {{ item }} </ul>
+              <ul v-for="(item, index) in herbalRec" :key="index + 'herbal'"> {{ item }} </ul>
+              <ul v-for="(item, index) in polaMakanRec" :key="index + 'makan'"> {{ item }} </ul>
+              <ul v-for="(item, index) in fisikRec" :key="index + 'fisik'"> {{ item }} </ul>
+              <ul v-for="(item, index) in pemeriksaanKesRec" :key="index + 'kes'"> {{ item }} </ul>
+              <hr class="bg-gray-300 my-4" />
+              <p class="text-lg">Identifikasi Masalah</p>
+              <!-- <ol v-for="(item, index) in reccList" :key="index + 'keyword'"> {{ item.keyword }}</ol> -->
             </template>
           </div>
         </section>
       </template>
       <template v-else>
-        <resume ref="resumeData" :patientData="patientData" :summary="reccList"></resume>
+        <resume ref="resumeData" :patientData="patientData" :summary="getAllRecommendation"></resume>
       </template>
 
       <!-- footer and disclaimers -->
@@ -267,8 +264,13 @@
         <h2 v-if="!isResumeOpen" class="font-bold break-normal text-gray-700 px-2 pb-8 text-xl">
           Tindak Lanjut
         </h2>
+        <!-- TODO: upsate if else -->
         <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-          <blockquote class="border-l-4 border-orange-600 italic my-4 pl-8 md:pl-12">
+          <blockquote v-if="!isResumeOpen" class="border-l-4 border-orange-600 italic my-4 pl-8 md:pl-12">
+            Pastikan bahwa seluruh data sudah terisi dengan benar dan
+            rekomendasi sudah muncul pada halaman ini untuk melanjutkan
+          </blockquote> 
+          <blockquote v-else class="border-l-4 border-orange-600 italic my-4 pl-8 md:pl-12">
             Pastikan bahwa seluruh data sudah terisi dengan benar dan
             rekomendasi sudah muncul pada halaman ini untuk melanjutkan
           </blockquote>
@@ -284,7 +286,7 @@
                 ]"
                 type="button"
               >
-                View Resume
+                Lihat Rangkuman
               </button>
             </template>
             <template v-else>
@@ -300,7 +302,14 @@
                 class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
                 type="button"
               >
-                Print
+                Print / Cetak
+              </button>
+              <button
+                @click="back"
+                class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
+                type="button"
+              >
+                Kembali ke laman utama
               </button>
             </template>
           </div>
@@ -324,7 +333,11 @@ import pemeriksaanKes from '../views/pemeriksaan-kes'
 export default {
   data () {
     return {
-      reccList: [],
+      herbalRec: [],
+      polaMakanRec: [],
+      fisikRec: [],
+      obatRec: [],
+      pemeriksaanKesRec: [],
       patientData: {
         firstName: '',
         lastName: '',
@@ -356,23 +369,29 @@ export default {
         this.patientData.weight !== '' &&
         this.patientData.address !== ''
       )
+    },
+    getAllRecommendation () {
+      return [...(this.herbalRec || []), ...(this.polaMakanRec || []), ...(this.fisikRec || []), ...(this.obatRec || []), ...(this.pemeriksaanKesRec || [])]
     }
   },
   methods: {
+    back () {
+      // TODO: Implememt back logic
+    },
     herbal (val) {
-      this.reccList = [...val]
+      this.herbalRec = val
     },
     polaMakan (val) {
-      this.reccList = val
+      this.polaMakan = val
     },
     fisik (val) {
-      this.reccList = val
+      this.fisikRec = val
     },
     obat (val) {
-      this.reccList = val
+      this.obatRec = val
     },
     pemeriksaanKes (val) {
-      this.reccList = val
+      this.pemeriksaanKesRec = val
     },
     showResumePage () {
       this.isResumeOpen = true
