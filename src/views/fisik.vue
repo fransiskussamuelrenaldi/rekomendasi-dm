@@ -110,7 +110,7 @@ export default {
   },
   methods: {
     nextPage () {
-      this.$emit('pola-makan', this.getRecList)
+      this.$emit('fisik', this.getRecList)
     }
   }
 }

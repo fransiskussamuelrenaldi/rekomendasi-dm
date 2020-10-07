@@ -104,7 +104,6 @@ export default {
   },
   methods: {
     nextPage () {
-      console.log('trig')
       this.$emit('herbal', this.getRecList)
     }
   }
