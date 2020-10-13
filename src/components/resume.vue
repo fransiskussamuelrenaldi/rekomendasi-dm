@@ -11,9 +11,7 @@
     <hr class="bg-gray-300 my-12" />
     <p>Rekomendasi :</p>
     <ul v-for="(item, index) in summary" :key="index + 'rec'">
-      {{
-        item
-      }}
+      {{ item  }}
     </ul>
   </div>
 </template>
