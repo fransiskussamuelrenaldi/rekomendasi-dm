@@ -219,29 +219,6 @@
               Lihat Rangkuman
             </button>
           </template>
-          <!-- <template>
-            <button
-              @click="copyToClipboard"
-              class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
-              type="button"
-            >
-              Copy
-            </button>
-              <button
-              @click="onUserPrint"
-              class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
-              type="button"
-            >
-              Print / Cetak
-            </button>
-            <button
-              @click="back"
-              class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
-              type="button"
-            >
-              Kembali ke laman utama
-            </button>
-          </template> -->
         </div>
       </div>
     </section>
