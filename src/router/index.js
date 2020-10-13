@@ -7,10 +7,11 @@ const Herbal = () => import(/* webpackChunkName: "entry" */ '../views/herbal')
 const PolaMakan = () => import(/* webpackChunkName: "entry" */ '../views/pola-makan')
 const Fisik = () => import(/* webpackChunkName: "entry" */ '../views/fisik')
 const Obat = () => import(/* webpackChunkName: "entry" */ '../views/obat')
+const Resume = () => import(/* webpackChunkName: "resume" */ '../views/resume-copy')
 
 const routes = [
   {
-    path: '/entry',
+    path: '/',
     name: 'entry',
     component: Entry,
     children: [
@@ -31,6 +32,11 @@ const routes = [
         component: Obat
       }
     ]
+  },
+  {
+    path: '/resume',
+    name: 'resume',
+    component: Resume
   }
 ]
 
