@@ -199,7 +199,7 @@
         Tindak Lanjut
       </h2>
       <!-- TODO: upsate if else -->
-      <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+      <div id="section7" class="p-8 mt-6 mb-10 lg:mt-0 rounded shadow bg-white">
         <blockquote class="border-l-4 border-orange-600 italic my-4 pl-8 md:pl-12">
           Pastikan bahwa seluruh data sudah terisi dengan benar dan
           rekomendasi sudah muncul pada halaman ini untuk melanjutkan
@@ -223,7 +223,6 @@
       </div>
     </section>
     </template>
-    <button @click="onGoToResume">wkwkwkw</button>
     <!-- end footer and disclaimers -->
   </div>
 </template>
@@ -245,13 +244,18 @@ export default {
       fisikRec: [],
       obatRec: [],
       pemeriksaanKesRec: [],
+      generalCheckRec: [],
       patientData: {
-        firstName: '',
-        lastName: '',
+        name: '',
         age: '',
         gender: '',
         weight: '',
-        address: ''
+        height: '',
+        address: '',
+        consultantType: '',
+        consultantName: '',
+        fastingBloodGlucose: '',
+        hba1c: ''
       },
       isResumeOpen: false
     }
@@ -267,13 +271,15 @@ export default {
   computed: {
     isGoToResumeEnable () {
       return (
-        this.patientData.firstName !== '' &&
-        this.patientData.lastName !== '' &&
+        this.patientData.name !== '' &&
         this.patientData.age !== '' &&
         this.patientData.gender !== '' &&
-        this.patientData.gender !== '' &&
         this.patientData.weight !== '' &&
-        this.patientData.address !== ''
+        this.patientData.height !== '' &&
+        this.patientData.address !== '' &&
+        this.patientData.consultantType !== '' &&
+        this.patientData.consultantName !== '' &&
+        (this.patientData.fastingBloodGlucose !== '' || this.patientData.hba1c !== '')
       )
     },
     getAllRecommendation () {
@@ -296,6 +302,9 @@ export default {
     pemeriksaanKes (val) {
       this.pemeriksaanKesRec = val
     },
+    generalCheck (val) {
+      this.generalCheckRec = val
+    },
     showResumePage () {
       this.isResumeOpen = true
     },
@@ -304,7 +313,6 @@ export default {
       this.patientData[key] = obj[key]
     },
     onGoToResume () {
-      console.log('hiakaka')
       store.dispatch('setPatientData', this.patientData)
       store.dispatch('setRecommendations', this.getAllRecommendation)
       this.$router.push({ name: 'resume' })
