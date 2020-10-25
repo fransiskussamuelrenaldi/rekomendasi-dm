@@ -59,24 +59,23 @@
 export default {
   data () {
     return {
+      rootCause: [],
       h: {
         isUsing: {
           question: 'Apakah pasien menggunakan obat herbal?',
           keyword: 'Obat herbal',
-          val: null,
-          isShow: true
+          val: null
         },
         isAdjuvan: {
           question: 'Apakah digunakan sebagai adjuvan/tambahan terhadap obat resep yang diberikan?',
           keyword: 'Adjuvan',
-          val: null,
-          isShow: false
+          val: null
         },
         isSingleUse: {
           question: 'Konfirmasi apakah obat herbal digunakan secara tunggal untuk mengobati DM?',
-          keyword: 'Obat herbal tunggal',
+          keyword: 'obat herbal digunakan secara tunggal',
           val: null,
-          isShow: false
+          showRootCauseIf: 1
         }
       },
       herbalReccomendations: {
@@ -105,6 +104,16 @@ export default {
   methods: {
     nextPage () {
       this.$emit('herbal', this.getRecList)
+    },
+    getRootCause () {
+      const cause = []
+      for (const key in this.h) {
+        if (this.h[key].val !== null && (this.h[key].val === this.h[key].showRootCauseIf)) {
+          cause.push(this.h[key].keyword)
+        }
+      }
+      this.rootCause = cause
+      return cause
     }
   }
 }
