@@ -54,7 +54,7 @@ export default new Vuex.Store({
       commit(SET_PATIENT_DATA, payload)
     },
     setRecommendations ({ commit, state }, payload) {
-      commit(SET_PATIENT_DATA, payload)
+      commit(SET_RECOMMENDATION_LIST, payload)
     },
     setGeneralRec ({ commit, state }, payload) {
       commit(SET_GENERAL_REC, payload)
