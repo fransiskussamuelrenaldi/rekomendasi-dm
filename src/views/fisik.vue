@@ -29,17 +29,6 @@
         </div>
       </template>
       <template v-else-if="!p.isDoing.val && p.isDoing.val !== null">
-        <!-- <span class="text-gray-700">{{ p.isNoTime.question }}</span>
-        <div class="mt-2">
-          <label class="inline-flex items-center">
-            <input v-model="p.isNoTime.val" type="radio" class="form-radio" :name="p.isNoTime.keyword" :value=1>
-            <span class="ml-2">Ya</span>:
-          </label>
-          <label class="inline-flex items-center ml-6">
-            <input v-model="p.isNoTime.val" type="radio" class="form-radio" :name="p.isNoTime.keyword" :value=0>
-            <span class="ml-2">Tidak</span>
-          </label>
-        </div> -->
       </template>
     <button
       @click="nextPage"
@@ -51,23 +40,28 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   data () {
     return {
+      rootCause: [],
       p: {
         isDoing: {
           question: 'Apakah pasien melakukan aktivitas fisik?',
           keyword: 'Aktivitas fisik',
+          showRootCauseIf: 0,
           val: null
         },
         isRoutine: {
           question: 'Apakah pasien melakukan olah raga secara rutin?',
-          keyword: 'OR rutin',
+          keyword: 'Olah raga secara rutin',
+          showRootCauseIf: 0,
           val: null
         },
         isNoTime: {
           question: 'Apakah pasien merasa tidak memiliki waktu untuk melakukan olahraga?',
-          keyword: 'OR rutin',
+          keyword: 'Tidak memiliki waktu untuk melakukan olah raga',
+          showRootCauseIf: 0,
           val: null
         }
       },
@@ -111,6 +105,17 @@ export default {
   methods: {
     nextPage () {
       this.$emit('fisik', this.getRecList)
+      store.dispatch('setRootCause', this.getRootCause())
+    },
+    getRootCause () {
+      const cause = []
+      for (const key in this.p) {
+        if (this.p[key].val !== null && (this.p[key].val === this.p[key].showRootCauseIf)) {
+          cause.push(this.p[key].keyword)
+        }
+      }
+      this.rootCause = cause
+      return cause
     }
   }
 }
