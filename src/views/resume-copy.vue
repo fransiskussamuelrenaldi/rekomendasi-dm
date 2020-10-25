@@ -75,7 +75,7 @@
 <script>
 import { mapState } from 'vuex'
 // import store from '../store'
-// import router from '../router'
+import router from '../router'
 
 export default {
   beforeRouteEnter (to, from, next) {
@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     back () {
-      console.log('bacl')
+      router.replace({ name: 'entry' })
     },
     copyToClipboard () {
       // TODO: Continue with UI
