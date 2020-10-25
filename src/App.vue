@@ -16,6 +16,7 @@ export default {
 }
 </script>
 
+<style src="./assets/styles/index.css"></style>
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
