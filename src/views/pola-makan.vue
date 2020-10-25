@@ -45,15 +45,18 @@
 export default {
   data () {
     return {
+      rootCause: [],
       f: {
         isDoing: {
           question: 'Apakah pasien melakukan pengaturan pola makan?',
           keyword: 'Atur pola makan',
+          showRootCauseIf: 0,
           val: null
         },
         isConsulting: {
           question: 'Apakah pasien berkonsultasi dengan tenaga kesehatan dalam melakukan pemilihan makanan?',
           keyword: 'Pemlihan makanan',
+          showRootCauseIf: 0,
           val: null
         }
       },
@@ -89,6 +92,16 @@ export default {
   methods: {
     nextPage () {
       this.$emit('pola-makan', this.getRecList)
+    },
+    getRootCause () {
+      const cause = []
+      for (const key in this.f) {
+        if (this.f[key].val !== null && (this.f[key].val === this.f[key].showRootCauseIf)) {
+          cause.push(this.f[key].keyword)
+        }
+      }
+      this.rootCause = cause
+      return cause
     }
   }
 }
