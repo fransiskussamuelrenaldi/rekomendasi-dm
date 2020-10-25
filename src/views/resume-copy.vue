@@ -1,25 +1,51 @@
 <template>
-  <div id="resumeContent" class="whole-container container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
-    <div class="w-full p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-      <h1 class="flex items-center break-normal text-gray-700 px-2 mt-12 lg:mt-0 md:text-xl"> Identitas Pasien </h1>
-      <div v-if="patientData" class="px-2 py-4 identity-list">
-        <p> Nama Depan : {{ patientData.firstName || '' }}</p>
-        <p> Nama Belakang : {{ patientData.lastName || '' }}</p>
-        <p> Jenis Kelamin : {{ patientData.gender || '' }}</p>
-        <p> Usia : {{ patientData.age || '-' }} tahun</p>
-        <p> Berat Badan : {{ patientData.weight || '-' }} kg</p>
-        <p> Alamat : {{ patientData.address }}</p>
+  <div>
+    <div id="resumeContent" class="whole-container container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+      <div class="w-full p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+        <p class="flex items-center break-normal text-gray-700 px-2 mt-12 lg:mt-0 md:text-xl"> Identitas Pasien </p>
+        <div v-if="patientData" class="px-2 py-4 identity-list">
+          <table>
+            <tr>
+              <td>Nama Pasien </td>
+              <td> : {{ patientData.name || 'wkwkwk' }}</td>
+            </tr>
+              <tr>
+              <td>Alamat</td>
+              <td> : {{ patientData.address || '' }}</td>
+            </tr>
+            <tr>
+              <td>Jenis Kelamin</td>
+              <td> : {{ patientData.gender || '' }}</td>
+            </tr>
+            <tr>
+              <td>Usia</td>
+              <td> : {{ patientData.age || '-' }} tahun</td>
+            </tr>
+            <tr>
+              <td>Berat Badan</td>
+              <td> : {{ patientData.weight || '-' }} kg</td>
+            </tr>
+            <tr>
+              <td>Tinggi Badan</td>
+              <td> : {{ patientData.height || '-' }} cm</td>
+            </tr>
+            <tr>
+              <td>BMI</td>
+              <td> : {{ patientData.calcBmi || '-' }} kg/m<sup>2</sup></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="w-full p-8 mt-6 rounded shadow bg-white">
+        <p class="flex items-center break-normal text-gray-700 md:text-xl"> Rekomendasi </p>
+        <ul v-for="(item, index) in recommendations" :key="index + 'rec'">
+          {{ item  }}
+        </ul>
       </div>
     </div>
-
-    <div class="w-full p-8 mt-6 rounded shadow bg-white">
-      <h1 class="flex items-center break-normal text-gray-700 px-2 md:text-xl"> Rekomendasi </h1>
-      <ul v-for="(item, index) in recommendations" :key="index + 'rec'">
-        {{ item  }}
-      </ul>
-    </div>
-    <div class="w-full p-8 mt-6 rounded shadow bg-white">
-      <template>
+    <div class="whole-container container w-full flex flex-wrap mx-auto px-2 pt-8 md:pt-2 sm:pt-2 mt-2">
+      <div class="w-full flex p-8 mt-6 rounded shadow bg-white">
         <button
           @click="copyToClipboard"
           class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
@@ -32,16 +58,16 @@
           class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
           type="button"
         >
-          Print / Cetak
+          Cetak
         </button>
         <button
           @click="back"
           class="shadow bg-orange-700 hover:bg-orange-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4"
           type="button"
         >
-          Kembali ke laman utama
+          Kembali
         </button>
-      </template>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +97,8 @@ export default {
       // TODO: Continue with UI
       const el = document.createElement('textarea')
 
-      el.value = document.querySelector('#resumeContent').innerHTML
+      el.value = document.querySelector('#resumeContent').innerText
+
       document.body.appendChild(el)
       el.select()
       try {
