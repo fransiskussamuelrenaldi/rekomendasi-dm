@@ -29,6 +29,7 @@
               <td>Tinggi Badan</td>
               <td> : {{ patientData.height || '-' }} cm</td>
             </tr>
+            <!-- TODO: Check this bmi is still buggy -->
             <tr>
               <td>BMI</td>
               <td> : {{ patientData.calcBmi || '-' }} kg/m<sup>2</sup></td>
@@ -38,8 +39,14 @@
       </div>
 
       <div class="w-full p-8 mt-6 rounded shadow bg-white">
-        <p class="flex items-center break-normal text-gray-700 md:text-xl"> Rekomendasi </p>
+        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4"> Rekomendasi </p>
         <ul v-for="(item, index) in recommendations" :key="index + 'rec'">
+          {{ item  }}
+        </ul>
+      </div>
+      <div class="w-full p-8 mt-6 rounded shadow bg-white">
+        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4"> Identifikasi Masalah </p>
+        <ul v-for="(item, index) in rootCause" :key="index + 'rec'">
           {{ item  }}
         </ul>
       </div>
@@ -79,14 +86,15 @@ import router from '../router'
 
 export default {
   beforeRouteEnter (to, from, next) {
-    // if (!store.state.patientData.firstName) router.push({ name: 'entry' })
+    // if (store.state.patientData && !store.state.patientData.name) router.push({ name: 'entry' })
     // else next()
     next()
   },
   computed: {
     ...mapState({
       patientData: state => state.patientData || {},
-      recommendations: state => state.reccomendations || {}
+      recommendations: state => state.reccomendations || [],
+      rootCause: state => state.rootCause || []
     })
   },
   methods: {
@@ -94,7 +102,7 @@ export default {
       router.replace({ name: 'entry' })
     },
     copyToClipboard () {
-      // TODO: Continue with UI
+      // TODO: Add simple toast
       const el = document.createElement('textarea')
 
       el.value = document.querySelector('#resumeContent').innerText
