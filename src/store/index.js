@@ -5,7 +5,9 @@ import Vuex from 'vuex'
 import {
   SET_PATIENT_DATA,
   SET_RECOMMENDATION_LIST,
-  SET_GENERAL_REC
+  SET_GENERAL_REC,
+  SET_DRUG_REC,
+  SET_ROOT_CAUSE
 } from './mutation-types'
 
 Vue.use(Vuex)
@@ -27,7 +29,8 @@ export default new Vuex.Store({
     },
     generalRecommendations: [],
     reccomendations: [],
-    rootCauseIdentification: []
+    drugReccomendations: [],
+    rootCause: []
   },
   mutations: {
     [SET_PATIENT_DATA] (state, payload) {
@@ -38,6 +41,12 @@ export default new Vuex.Store({
     },
     [SET_GENERAL_REC] (state, payload) {
       state.generalRecommendations = [...state.generalRecommendations, { ...payload }]
+    },
+    [SET_DRUG_REC] (state, payload) {
+      state.drugReccomendations = payload
+    },
+    [SET_ROOT_CAUSE] (state, payload) {
+      state.rootCause = [...state.rootCause, ...payload]
     }
   },
   actions: {
@@ -49,6 +58,12 @@ export default new Vuex.Store({
     },
     setGeneralRec ({ commit, state }, payload) {
       commit(SET_GENERAL_REC, payload)
+    },
+    setDrugReccomendation ({ commit, state }, payload) {
+      commit(SET_DRUG_REC, payload)
+    },
+    setRootCause ({ commit, state }, payload) {
+      commit(SET_ROOT_CAUSE, payload)
     }
   },
   modules: {}
