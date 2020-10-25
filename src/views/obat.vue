@@ -250,9 +250,11 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   data () {
     return {
+      rootCause: [],
       o: {
         isUsingMed: {
           question: 'Apakah pasien pernah / sedang menggunakan obat antidiabetik?',
@@ -262,21 +264,25 @@ export default {
         isBadExp: {
           question: 'Apakah pasien memiliki pengalaman tidak menyenangkan terkait dengan penggunaan obat?',
           keyword: 'Penalaman tidak menyenangkan',
+          showRootCauseIf: 1,
           val: null
         },
         isEso: {
           question: 'Apakah ada masalah dengan efek samping yang diterima setelah minum obat?',
           keyword: 'Efek samping',
+          showRootCauseIf: 1,
           val: null
         },
         isEsoTolerable: {
           question: 'Apakah masih dapat mentolerir efek samping tersebut?',
-          keyword: 'OR rutin',
+          keyword: 'ESO tidak ditolerir',
+          showRootCauseIf: 0,
           val: null
         },
         isOrganolepticProb: {
           question: 'Apakah ada masalah dengan organoleptik obat (bau, rasa bentuk)?',
           keyword: 'Masalah organoleptik',
+          showRootCauseIf: 1,
           val: null
         },
         isEsoHandled: {
@@ -287,16 +293,19 @@ export default {
         isTraumatic: {
           question: 'Apakah pasien merasa trauma / depresi / tertekan saat menggunakan obat?',
           keyword: 'Trauma/depresi/tertekan',
+          showRootCauseIf: 1,
           val: null
         },
         isLifeOrFamProb: {
           question: 'Apakah pasien memiliki beban pribadi atau keluarga?',
           keyword: 'Beban pribadi / keluarga',
+          showRootCauseIf: 1,
           val: null
         },
         isEconProb: {
           question: 'Apakah pasien memiliki beban ekonomi?',
           keyword: 'Beban ekonomi',
+          showRootCauseIf: 1,
           val: null
         },
         isHaveInsurance: {
@@ -307,11 +316,13 @@ export default {
         isLazy: {
           question: 'Apakah pasien malas menggunakan obat?',
           keyword: 'Malas menggunakan obat',
+          showRootCauseIf: 1,
           val: null
         },
         isForget: {
           question: 'Apakah pasien sering lupa menggunakan obat?',
           keyword: 'Lupa menggunakan obat',
+          showRootCauseIf: 1,
           val: null
         },
         isLivingWithFam: {
@@ -322,21 +333,25 @@ export default {
         isBusy: {
           question: 'Apakah pasien memiliki aktivitas yang padat?',
           keyword: 'Aktivitas padat',
+          showRootCauseIf: 1,
           val: null
         },
         isSizeProblem: {
           question: 'Apakah terdapat masalah ukuran?',
-          keyword: 'Ukuran',
+          keyword: 'Ukuran obat',
+          showRootCauseIf: 1,
           val: null
         },
         isTasteProblem: {
           question: 'Apakah terdapat masalah rasa?',
-          keyword: 'Rasa',
+          keyword: 'Rasa obat',
+          showRootCauseIf: 1,
           val: null
         },
         isSmellProblem: {
           question: 'Apakah terdapat masalah bau?',
-          keyword: 'Bau',
+          keyword: 'Bau obat',
+          showRootCauseIf: 1,
           val: null
         }
       },
@@ -510,11 +525,17 @@ export default {
   methods: {
     nextPage () {
       this.$emit('obat', this.getRecList)
+      store.dispatch('setRootCause', this.getRootCause())
     },
-    constructPayload (rec = {}, question = {}) {
-      return {
-        rec: ''
+    getRootCause () {
+      const cause = []
+      for (const key in this.o) {
+        if (this.o[key].val !== null && (this.o[key].val === this.o[key].showRootCauseIf)) {
+          cause.push(this.o[key].keyword)
+        }
       }
+      this.rootCause = cause
+      return cause
     }
   }
 }
