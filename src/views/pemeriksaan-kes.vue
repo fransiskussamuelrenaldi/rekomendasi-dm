@@ -64,13 +64,16 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   data () {
     return {
+      rootCause: [],
       c: {
         isDoingCheckup: {
           question: 'Apakah pasien melakukan pemeriksaan kesehatan?',
           keyword: 'Pemeriksaan kesehatan',
+          showRootCauseIf: 0,
           val: null
         },
         isRoutine: {
@@ -81,11 +84,13 @@ export default {
         isNoTime: {
           question: 'Apakah pasien merasa sibuk sehingga tidak memiliki waktu untuk melakukan pemeriksaan?',
           keyword: 'Pasien merasa sibuk',
+          showRootCauseIf: 1,
           val: null
         },
         isDistanceProb: {
           question: 'Apakah pasien mengalami kendala terkait dengan jarak?',
           keyword: 'Kendala jarak',
+          showRootCauseIf: 1,
           val: null
         }
       },
@@ -135,6 +140,17 @@ export default {
   methods: {
     nextPage () {
       this.$emit('pemeriksaan-kes', this.getRecList)
+      store.dispatch('setRootCause', this.getRootCause())
+    },
+    getRootCause () {
+      const cause = []
+      for (const key in this.c) {
+        if (this.c[key].val !== null && (this.c[key].val === this.c[key].showRootCauseIf)) {
+          cause.push(this.c[key].keyword)
+        }
+      }
+      this.rootCause = cause
+      return cause
     }
   }
 }
