@@ -1,3 +1,8 @@
 export const SET_PATIENT_DATA = 'setPatientData'
 export const SET_RECOMMENDATION_LIST = 'setRecommendationList'
 export const SET_GENERAL_REC = 'setGeneralRec'
+export const SET_DRUG_REC = 'setDrugRec'
+export const SET_HERBAL_REC = 'setHerbalRec'
+export const SET_PHYS_REC = 'setPhysRec'
+export const SET_DIETARY_REC = 'setDietaryRec'
+export const SET_ROOT_CAUSE = 'setRootCause'
