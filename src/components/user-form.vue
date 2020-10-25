@@ -156,6 +156,7 @@
             type="text"
             pattern="[0-9]*"
             placeholder="-"
+            @change="handleInput('calcBmi')"
           >
         </div>
       </div>
@@ -231,6 +232,7 @@ export default {
       return (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
     },
     glucoseRec () {
+      // TODO: Fix the dispatch
       const glucose = {}
       if (this.isBloodGlucoseFilled) {
         if (this.fastingBloodGlucose < 70) {
@@ -262,6 +264,7 @@ export default {
       return glucose
     },
     bmiRec () {
+      // TODO: Fix the dispatch
       const bmi = {}
       if (this.calcBmi < 18.5) {
         bmi.type = 'Underweight'
