@@ -98,17 +98,6 @@
             </li>
           </ul>
         </div>
-        <!-- TODO fix this not showing -->
-        <div
-          class="w-full lg:w-4/5 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12"
-        >
-          <span class="text-base text-orange-600 font-bold"></span>
-          <a
-            href="#"
-            class="text-base md:text-sm text-orange-600 font-bold no-underline hover:underline"
-            >Kembali ke atas</a
-          >
-        </div>
       </div>
       <section class="w-full lg:w-4/5">
         <h1
