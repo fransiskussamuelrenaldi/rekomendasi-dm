@@ -3,23 +3,6 @@
   <div class="whole-container container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
     <template>
       <div class="left-sidebar-pointers w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
-        <!-- <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p> -->
-        <!-- <div class="block lg:hidden sticky inset-0">
-          <button
-            id="menu-toggle"
-            class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-orange-600 appearance-none focus:outline-none"
-          >
-            <svg
-              class="fill-current h-3 float-right"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-              />
-            </svg>
-          </button>
-        </div> -->
         <div
           class="w-full sticky inset-0 hidden max-h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 my-2 lg:my-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20"
           style="top: 6em"
@@ -165,15 +148,17 @@
         </h2>
         <div id="section7" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
           <template>
+            <p class="text-lg">Identifikasi Masalah</p>
+            <ol v-for="(item, index) in rootCause" :key="index + 'cause'"> {{ item }}</ol>
+          </template>
+          <hr class="bg-gray-300 my-4" />
+          <template>
             <p class="text-lg">Rekomendasi</p>
             <ul v-for="(item, index) in obatRec" :key="index + 'obat'"> {{ item }} </ul>
             <ul v-for="(item, index) in herbalRec" :key="index + 'herbal'"> {{ item }} </ul>
             <ul v-for="(item, index) in polaMakanRec" :key="index + 'makan'"> {{ item }} </ul>
             <ul v-for="(item, index) in fisikRec" :key="index + 'fisik'"> {{ item }} </ul>
             <ul v-for="(item, index) in pemeriksaanKesRec" :key="index + 'kes'"> {{ item }} </ul>
-            <hr class="bg-gray-300 my-4" />
-            <p class="text-lg">Identifikasi Masalah</p>
-            <!-- <ol v-for="(item, index) in reccList" :key="index + 'keyword'"> {{ item.keyword }}</ol> -->
           </template>
         </div>
       </section>
@@ -224,6 +209,7 @@ import obat from '../views/obat'
 import polaMakan from '../views/pola-makan'
 import fisik from '../views/fisik'
 import pemeriksaanKes from '../views/pemeriksaan-kes'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -258,6 +244,9 @@ export default {
     pemeriksaanKes
   },
   computed: {
+    ...mapState({
+      rootCause: state => state.rootCause || []
+    }),
     isGoToResumeEnable () {
       return (
         this.patientData.name !== '' &&
