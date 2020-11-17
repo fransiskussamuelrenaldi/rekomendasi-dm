@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   data () {
     return {
@@ -73,7 +74,7 @@ export default {
         },
         isSingleUse: {
           question: 'Konfirmasi apakah obat herbal digunakan secara tunggal untuk mengobati DM?',
-          keyword: 'obat herbal digunakan secara tunggal',
+          keyword: 'Obat herbal digunakan secara tunggal',
           val: null,
           showRootCauseIf: 1
         }
@@ -104,6 +105,7 @@ export default {
   methods: {
     nextPage () {
       this.$emit('herbal', this.getRecList)
+      store.dispatch('setRootCause', this.getRootCause())
     },
     getRootCause () {
       const cause = []
