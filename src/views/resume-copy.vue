@@ -2,12 +2,12 @@
   <div>
     <div id="resumeContent" class="whole-container container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
       <div class="w-full p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-        <p class="flex items-center break-normal text-gray-700 px-2 mt-12 lg:mt-0 md:text-xl"> Identitas Pasien </p>
+        <p class="flex items-center break-normal text-gray-700 px-2 mt-12 lg:mt-0 md:text-xl font-bold"> Identitas Pasien </p>
         <div v-if="patientData" class="px-2 py-4 identity-list">
           <table>
             <tr>
               <td>Nama Pasien </td>
-              <td> : {{ patientData.name || 'wkwkwk' }}</td>
+              <td> : {{ patientData.name || '' }}</td>
             </tr>
               <tr>
               <td>Alamat</td>
@@ -39,14 +39,19 @@
       </div>
 
       <div class="w-full p-8 mt-6 rounded shadow bg-white">
-        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4"> Rekomendasi </p>
-        <ul v-for="(item, index) in recommendations" :key="index + 'rec'">
+        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4 font-bold"> Identifikasi Masalah Umum </p>
+        <p><span class="text-gray-700 font-bold">{{ bmiRecommendation.type }} :</span> <span class="text-gray-700">{{ bmiRecommendation.rec }}</span></p>
+        <p><span class="text-gray-700 font-bold">{{ glucoseRecommendation.type }} :</span> : <span class="text-gray-700">{{ glucoseRecommendation.rec }}</span></p>
+      </div>
+      <div class="w-full p-8 mt-6 rounded shadow bg-white">
+        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4 font-bold"> Identifikasi Masalah Terkait Pengobatan </p>
+        <ul v-for="(item, index) in rootCause" :key="index + 'root-obat'">
           {{ item  }}
         </ul>
       </div>
       <div class="w-full p-8 mt-6 rounded shadow bg-white">
-        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4"> Identifikasi Masalah </p>
-        <ul v-for="(item, index) in rootCause" :key="index + 'rec'">
+        <p class="flex items-center break-normal text-gray-700 md:text-xl pb-4 font-bold"> Rekomendasi </p>
+        <ul v-for="(item, index) in recommendations" :key="index + 'rec'">
           {{ item  }}
         </ul>
       </div>
@@ -81,7 +86,7 @@
 
 <script>
 import { mapState } from 'vuex'
-// import store from '../store'
+import store from '../store'
 import router from '../router'
 
 export default {
@@ -94,12 +99,16 @@ export default {
     ...mapState({
       patientData: state => state.patientData || {},
       recommendations: state => state.reccomendations || [],
+      glucoseRecommendation: state => state.glucoseRecommendation || [],
+      bmiRecommendation: state => state.bmiRecommendation || [],
       rootCause: state => state.rootCause || []
     })
   },
   methods: {
     back () {
       router.replace({ name: 'entry' })
+      store.dispatch('setBmiRec', {})
+      store.dispatch('setGlucoseRec', {})
     },
     copyToClipboard () {
       // TODO: Add simple toast
@@ -111,9 +120,9 @@ export default {
       el.select()
       try {
         document.execCommand('copy')
-        alert('Testing code was copied ' + el.value)
+        alert('Rekomendasi anda telah disalin')
       } catch (error) {
-        alert('Oops, unable to copy')
+        alert('Maaf terjadi kesalahan saat menyalin')
       } finally {
         document.body.removeChild(el)
       }
