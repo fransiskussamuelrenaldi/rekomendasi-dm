@@ -6,8 +6,11 @@ import {
   SET_PATIENT_DATA,
   SET_RECOMMENDATION_LIST,
   SET_GENERAL_REC,
+  SET_EMPTY_GENERAL_REC,
   SET_DRUG_REC,
-  SET_ROOT_CAUSE
+  SET_ROOT_CAUSE,
+  SET_BMI_REC,
+  SET_GLUCOSE_REC
 } from './mutation-types'
 
 Vue.use(Vuex)
@@ -29,6 +32,8 @@ export default new Vuex.Store({
     },
     generalRecommendations: [],
     reccomendations: [],
+    bmiRecommendation: {},
+    glucoseRecommendation: {},
     drugReccomendations: [],
     rootCause: []
   },
@@ -47,7 +52,17 @@ export default new Vuex.Store({
     },
     [SET_ROOT_CAUSE] (state, payload) {
       state.rootCause = [...state.rootCause, ...payload]
+    },
+    [SET_EMPTY_GENERAL_REC] (state) {
+      state.generalRecommendations = []
+    },
+    [SET_BMI_REC] (state, payload) {
+      state.bmiRecommendation = payload
+    },
+    [SET_GLUCOSE_REC] (state, payload) {
+      state.glucoseRecommendation = payload
     }
+
   },
   actions: {
     setPatientData ({ commit, state }, payload) {
@@ -64,6 +79,15 @@ export default new Vuex.Store({
     },
     setRootCause ({ commit, state }, payload) {
       commit(SET_ROOT_CAUSE, payload)
+    },
+    setEmptyGeneralRec ({ commit, state }) {
+      commit(SET_EMPTY_GENERAL_REC)
+    },
+    setGlucoseRec ({ commit, state }, payload) {
+      commit(SET_GLUCOSE_REC, payload)
+    },
+    setBmiRec ({ commit, state }, payload) {
+      commit(SET_BMI_REC, payload)
     }
   },
   modules: {}

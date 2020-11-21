@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
   data () {
     return {
@@ -49,13 +50,13 @@ export default {
       f: {
         isDoing: {
           question: 'Apakah pasien melakukan pengaturan pola makan?',
-          keyword: 'Atur pola makan',
+          keyword: 'Pengaturan pola makan',
           showRootCauseIf: 0,
           val: null
         },
         isConsulting: {
           question: 'Apakah pasien berkonsultasi dengan tenaga kesehatan dalam melakukan pemilihan makanan?',
-          keyword: 'Pemlihan makanan',
+          keyword: 'Berkonsultasi dengan tenaga kesehatan',
           showRootCauseIf: 0,
           val: null
         }
@@ -92,6 +93,7 @@ export default {
   methods: {
     nextPage () {
       this.$emit('pola-makan', this.getRecList)
+      store.dispatch('setRootCause', this.getRootCause())
     },
     getRootCause () {
       const cause = []

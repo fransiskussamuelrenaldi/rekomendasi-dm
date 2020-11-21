@@ -232,7 +232,6 @@ export default {
       return (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
     },
     glucoseRec () {
-      // TODO: Fix the dispatch
       const glucose = {}
       if (this.isBloodGlucoseFilled) {
         if (this.fastingBloodGlucose < 70) {
@@ -260,11 +259,10 @@ export default {
           glucose.rec = 'Anda tergolong dalam kategori diabetes. Minumlah obat secara teratur, lakukan kontrol dan konsultasikan kondisi kesehatan anda secara rutin (minimal satu bulan satu kali). Lakukan pola hidup sehat secara ketat, lakukan olah raga secara rutin dan atur pola makan anda sesuai dengan anjuran tenaga kesehatan.'
         }
       }
-      if (glucose.rec) store.dispatch('setGeneralRec', glucose)
+      if (glucose.rec) store.dispatch('setGlucoseRec', glucose)
       return glucose
     },
     bmiRec () {
-      // TODO: Fix the dispatch
       const bmi = {}
       if (this.calcBmi < 18.5) {
         bmi.type = 'Underweight'
@@ -285,7 +283,8 @@ export default {
         bmi.type = 'Obesitas Kelas III'
         bmi.rec = 'Anda termasuk kelompok obesitas kelas III. Butuh usaha yang maksimal. Lakukan aktivitas dan olah raga rutin, pantau status kesehatan secara berkala, dan lakukan konsultasi diet pada profesional kesehatan'
       }
-      if (bmi.rec) store.dispatch('setGeneralRec', bmi)
+
+      if (bmi.rec) store.dispatch('setBmiRec', bmi)
       return bmi
     }
   },

@@ -8,7 +8,7 @@ const PolaMakan = () => import(/* webpackChunkName: "entry" */ '../views/pola-ma
 const Fisik = () => import(/* webpackChunkName: "entry" */ '../views/fisik')
 const Obat = () => import(/* webpackChunkName: "entry" */ '../views/obat')
 const Resume = () => import(/* webpackChunkName: "resume" */ '../views/resume-copy')
-
+const DrugTable = () => import(/* webpackChunkName: "drug-table" */ '../views/drug-table')
 const routes = [
   {
     path: '/',
@@ -37,6 +37,11 @@ const routes = [
     path: '/resume',
     name: 'resume',
     component: Resume
+  },
+  {
+    path: '/tabel-obat',
+    name: 'tabel-obat',
+    component: DrugTable
   }
 ]
 
