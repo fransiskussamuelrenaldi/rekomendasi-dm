@@ -14,6 +14,10 @@
               <td> : {{ patientData.nik || '' }}</td>
             </tr>
             <tr>
+              <td>Nomor KIS </td>
+              <td> : {{ patientData.kis || '' }}</td>
+            </tr>
+            <tr>
               <td>Alamat</td>
               <td> : {{ patientData.address || '' }}</td>
             </tr>
@@ -149,7 +153,7 @@ export default {
         </body>
         <br>
         <br>
-        <footer>2020 - Tatalaksana Diagnosis Ketidakpatuhan Pasien Diabetes Mellitus</footer>
+        <footer class="mx-4">2020 - Tatalaksana Diagnosis Ketidakpatuhan Pasien Diabetes Mellitus (FSR)</footer>
       </html>`)
 
       WinPrint.document.close()
