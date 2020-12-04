@@ -24,6 +24,8 @@ export default new Vuex.Store({
       gender: '',
       weight: '',
       height: '',
+      kis: '',
+      nik: '',
       address: '',
       consultantType: '',
       consultantName: '',

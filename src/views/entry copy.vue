@@ -224,6 +224,7 @@ export default {
         name: '',
         age: '',
         nik: '',
+        kis: '',
         gender: '',
         weight: '',
         height: '',

@@ -17,7 +17,7 @@
         </div>
         <div class="w-full px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nik">
-              NIK
+              NIK / Nomor KTP (Kartu Tanda Penduduk)
           </label>
           <input
             v-model="nik"
@@ -25,7 +25,22 @@
             ref="nik"
             type="text"
             placeholder="Ketik NIK pasien"
+            @keypress="formatNumber($event)"
             @input="handleInput('nik')"
+          >
+        </div>
+        <div class="w-full px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nik">
+              Nomor KIS (Kartu Indonesia Sehat)
+          </label>
+          <input
+            v-model="kis"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            ref="kis"
+            type="text"
+            placeholder="Ketik nomor KIS pasien"
+            @keypress="formatNumber($event)"
+            @input="handleInput('kis')"
           >
         </div>
       </div>
@@ -228,6 +243,7 @@ export default {
       height: '',
       address: '',
       nik: '',
+      kis: '',
       consultantType: '',
       consultantName: '',
       fastingBloodGlucose: '',
