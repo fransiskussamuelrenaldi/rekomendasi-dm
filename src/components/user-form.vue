@@ -14,7 +14,20 @@
             placeholder="Ketik nama pasien"
             @input="handleInput('name')"
           >
-          </div>
+        </div>
+        <div class="w-full px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nik">
+              NIK
+          </label>
+          <input
+            v-model="nik"
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            ref="nik"
+            type="text"
+            placeholder="Ketik NIK pasien"
+            @input="handleInput('nik')"
+          >
+        </div>
       </div>
       <div class="weight flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
@@ -214,6 +227,7 @@ export default {
       weight: '',
       height: '',
       address: '',
+      nik: '',
       consultantType: '',
       consultantName: '',
       fastingBloodGlucose: '',
@@ -229,7 +243,9 @@ export default {
     },
     calcBmi () {
       if (!this.weight || !this.height) return 0
-      return (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
+      const res = (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
+      store.dispatch('setCalcBmi', { calcBmi: res })
+      return res
     },
     glucoseRec () {
       const glucose = {}

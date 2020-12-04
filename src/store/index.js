@@ -10,7 +10,8 @@ import {
   SET_DRUG_REC,
   SET_ROOT_CAUSE,
   SET_BMI_REC,
-  SET_GLUCOSE_REC
+  SET_GLUCOSE_REC,
+  SET_CALC_BMI
 } from './mutation-types'
 
 Vue.use(Vuex)
@@ -61,8 +62,10 @@ export default new Vuex.Store({
     },
     [SET_GLUCOSE_REC] (state, payload) {
       state.glucoseRecommendation = payload
+    },
+    [SET_CALC_BMI] (state, payload) {
+      Object.assign(state.patientData, payload)
     }
-
   },
   actions: {
     setPatientData ({ commit, state }, payload) {
@@ -88,6 +91,9 @@ export default new Vuex.Store({
     },
     setBmiRec ({ commit, state }, payload) {
       commit(SET_BMI_REC, payload)
+    },
+    setCalcBmi ({ commit, state }, payload) {
+      commit(SET_CALC_BMI, payload)
     }
   },
   modules: {}

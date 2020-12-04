@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 const Entry = () => import(/* webpackChunkName: "entry" */ '../views/entry copy')
-const Herbal = () => import(/* webpackChunkName: "entry" */ '../views/herbal')
-const PolaMakan = () => import(/* webpackChunkName: "entry" */ '../views/pola-makan')
-const Fisik = () => import(/* webpackChunkName: "entry" */ '../views/fisik')
-const Obat = () => import(/* webpackChunkName: "entry" */ '../views/obat')
+const Herbal = () => import(/* webpackChunkName: "herbal" */ '../views/herbal')
+const PolaMakan = () => import(/* webpackChunkName: "polamakan" */ '../views/pola-makan')
+const Fisik = () => import(/* webpackChunkName: "fisik" */ '../views/fisik')
+const Obat = () => import(/* webpackChunkName: "obat" */ '../views/obat')
 const Resume = () => import(/* webpackChunkName: "resume" */ '../views/resume-copy')
 const DrugTable = () => import(/* webpackChunkName: "drug-table" */ '../views/drug-table')
 const routes = [

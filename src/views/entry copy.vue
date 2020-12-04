@@ -223,6 +223,7 @@ export default {
       patientData: {
         name: '',
         age: '',
+        nik: '',
         gender: '',
         weight: '',
         height: '',
@@ -230,7 +231,8 @@ export default {
         consultantType: '',
         consultantName: '',
         fastingBloodGlucose: '',
-        hba1c: ''
+        hba1c: '',
+        calcBmi: ''
       },
       isResumeOpen: false
     }
@@ -251,6 +253,7 @@ export default {
       return (
         this.patientData.name !== '' &&
         this.patientData.age !== '' &&
+        this.patientData.nik !== '' &&
         this.patientData.gender !== '' &&
         this.patientData.weight !== '' &&
         this.patientData.height !== '' &&
