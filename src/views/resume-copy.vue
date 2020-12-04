@@ -9,7 +9,11 @@
               <td>Nama Pasien </td>
               <td> : {{ patientData.name || '' }}</td>
             </tr>
-              <tr>
+            <tr>
+              <td>NIK </td>
+              <td> : {{ patientData.nik || '' }}</td>
+            </tr>
+            <tr>
               <td>Alamat</td>
               <td> : {{ patientData.address || '' }}</td>
             </tr>
@@ -29,7 +33,6 @@
               <td>Tinggi Badan</td>
               <td> : {{ patientData.height || '-' }} cm</td>
             </tr>
-            <!-- TODO: Check this bmi is still buggy -->
             <tr>
               <td>BMI</td>
               <td> : {{ patientData.calcBmi || '-' }} kg/m<sup>2</sup></td>
@@ -91,8 +94,8 @@ import router from '../router'
 
 export default {
   beforeRouteEnter (to, from, next) {
-    // if (store.state.patientData && !store.state.patientData.name) router.push({ name: 'entry' })
-    // else next()
+    if (store.state.patientData && !store.state.patientData.name) router.push({ name: 'entry' })
+    else next()
     next()
   },
   computed: {
@@ -107,8 +110,9 @@ export default {
   methods: {
     back () {
       router.replace({ name: 'entry' })
-      store.dispatch('setBmiRec', {})
-      store.dispatch('setGlucoseRec', {})
+      store.dispatch('setBmiRec', { type: '', rec: '' })
+      store.dispatch('setGlucoseRec', { type: '', rec: '' })
+      store.dispatch('setCalcBmi', { calcBmi: '' })
     },
     copyToClipboard () {
       // TODO: Add simple toast
@@ -143,6 +147,9 @@ export default {
         <body>
           ${prtHtml}
         </body>
+        <br>
+        <br>
+        <footer>2020 - Tatalaksana Diagnosis Ketidakpatuhan Pasien Diabetes Mellitus</footer>
       </html>`)
 
       WinPrint.document.close()
