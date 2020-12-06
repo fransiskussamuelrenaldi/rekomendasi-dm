@@ -262,7 +262,6 @@ export default {
       if (!this.weight || !this.height) return res
 
       res = (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
-      store.dispatch('setCalcBmi', { calcBmi: res })
       return res
     }
   },
@@ -286,6 +285,7 @@ export default {
       }
 
       if (this.calcBmi) {
+        store.dispatch('setCalcBmi', { calcBmi: this.calcBmi })
         this.getBmiRec()
       }
     },
