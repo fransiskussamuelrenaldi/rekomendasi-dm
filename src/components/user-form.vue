@@ -258,13 +258,42 @@ export default {
       return this.fastingBloodGlucose !== ''
     },
     calcBmi () {
-      if (!this.weight || !this.height) return 0
-      const res = (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
+      let res = 0
+      if (!this.weight || !this.height) return res
+
+      res = (+this.weight / ((+this.height / 100) ** 2)).toFixed(2)
       store.dispatch('setCalcBmi', { calcBmi: res })
       return res
+    }
+  },
+  methods: {
+    formatNumber (evt) {
+      if (!evt) evt = window.event
+      var charCode = (evt.which) ? evt.which : evt.keyCode
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        evt.preventDefault()
+      } else {
+        return true
+      }
     },
-    glucoseRec () {
-      const glucose = {}
+    handleInput (refName) {
+      this.$emit('setPatientInput', {
+        [refName]: this[refName]
+      })
+
+      if (this.fastingBloodGlucose || this.hba1c) {
+        this.getGlucoseRec()
+      }
+
+      if (this.calcBmi) {
+        this.getBmiRec()
+      }
+    },
+    getGlucoseRec () {
+      const glucose = {
+        type: '',
+        rec: ''
+      }
       if (this.isBloodGlucoseFilled) {
         if (this.fastingBloodGlucose < 70) {
           glucose.type = 'Hipoglikemia'
@@ -289,13 +318,18 @@ export default {
         } else if (this.hba1c >= 6.5) {
           glucose.type = 'Diabetes'
           glucose.rec = 'Anda tergolong dalam kategori diabetes. Minumlah obat secara teratur, lakukan kontrol dan konsultasikan kondisi kesehatan anda secara rutin (minimal satu bulan satu kali). Lakukan pola hidup sehat secara ketat, lakukan olah raga secara rutin dan atur pola makan anda sesuai dengan anjuran tenaga kesehatan.'
+        } else {
+          glucose.type = ''
+          glucose.rec = ''
         }
       }
-      if (glucose.rec) store.dispatch('setGlucoseRec', glucose)
+      if (glucose.rec) {
+        store.dispatch('setGlucoseRec', glucose)
+      }
       return glucose
     },
-    bmiRec () {
-      const bmi = {}
+    getBmiRec () {
+      const bmi = { type: '', rec: '' }
       if (this.calcBmi < 18.5) {
         bmi.type = 'Underweight'
         bmi.rec = 'Perlu adanya peningkatan asupan, berat badan anda di bawah normal, konsultasikan diet anda'
@@ -314,26 +348,15 @@ export default {
       } else if (this.calcBmi >= 40) {
         bmi.type = 'Obesitas Kelas III'
         bmi.rec = 'Anda termasuk kelompok obesitas kelas III. Butuh usaha yang maksimal. Lakukan aktivitas dan olah raga rutin, pantau status kesehatan secara berkala, dan lakukan konsultasi diet pada profesional kesehatan'
+      } else {
+        bmi.type = ''
+        bmi.rec = ''
       }
 
-      if (bmi.rec) store.dispatch('setBmiRec', bmi)
-      return bmi
-    }
-  },
-  methods: {
-    formatNumber (evt) {
-      if (!evt) evt = window.event
-      var charCode = (evt.which) ? evt.which : evt.keyCode
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-        evt.preventDefault()
-      } else {
-        return true
+      if (bmi.rec) {
+        store.dispatch('setBmiRec', bmi)
       }
-    },
-    handleInput (refName) {
-      this.$emit('setPatientInput', {
-        [refName]: this[refName]
-      })
+      return bmi
     }
   }
 }
