@@ -120,7 +120,7 @@
           Pengaturan Pola Makan
         </h2>
         <div id="section4" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-          <pola-makan @pola-makan="polaMakan"></pola-makan>
+          <pola-makan @pola-makan="polaMakanPasien"></pola-makan>
         </div>
 
         <hr class="bg-gray-300 my-12" />
@@ -270,8 +270,8 @@ export default {
     herbal (val) {
       this.herbalRec = val
     },
-    polaMakan (val) {
-      this.polaMakan = val
+    polaMakanPasien (val) {
+      this.polaMakanRec = val
     },
     fisik (val) {
       this.fisikRec = val

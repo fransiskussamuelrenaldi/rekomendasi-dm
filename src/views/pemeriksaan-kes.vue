@@ -131,7 +131,7 @@ export default {
           }
         }
       }
-      if (!this.c.isDoingCheckup.val) {
+      if (!this.c.isDoingCheckup.val && this.c.isDoingCheckup.val !== null) {
         listRecc.push(this.checkUpRecc.isConsultBloodGl.rec)
       }
       return listRecc

@@ -16,7 +16,6 @@
         </div>
       </div>
       <template v-if="f.isDoing.val">
-        <div v-if="f.isConsulting.val" class="group-input">
           <span class="text-gray-700">{{ f.isConsulting.question }}</span>
           <div class="mt-2">
             <label class="inline-flex items-center">
@@ -28,7 +27,6 @@
               <span class="ml-2">Tidak</span>
             </label>
           </div>
-        </div>
       </template>
       <template v-else>
       </template>
@@ -81,9 +79,12 @@ export default {
       const listRecc = []
       if (this.f.isDoing.val) {
         if (this.f.isConsulting) listRecc.push(this.foodRecc.isCheckPeriodically.rec)
-        else listRecc.push(this.foodRecc.isCheckHomeCare.rec)
+        else {
+          console.log('ke else')
+          listRecc.push(this.foodRecc.isCheckHomeCare.rec)
+        }
       }
-      if (!this.f.isDoing.val) {
+      if (!this.f.isDoing.val && this.f.isDoing.val !== null) {
         listRecc.push(this.foodRecc.isCheckPeriodically.rec)
         listRecc.push(this.foodRecc.isCheckHomeCare.rec)
       }

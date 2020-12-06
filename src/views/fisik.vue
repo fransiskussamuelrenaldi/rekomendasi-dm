@@ -94,7 +94,7 @@ export default {
           else listRecc.push(this.physRecc.isJoinActivity.rec)
         }
       }
-      if (!this.p.isDoing.val) {
+      if (!this.p.isDoing.val && this.p.isDoing.val !== null) {
         listRecc.push(this.physRecc.isMantainPE.rec)
         listRecc.push(this.physRecc.isAddRoutine.rec)
         listRecc.push(this.physRecc.isJoinActivity.rec)
