@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <div class="bg-gray-100 h-screen text-gray-900 tracking-wider text-left leading-normal">
+    <div class="bg-gray-100 text-gray-900 tracking-wider text-left leading-normal">
       <router-view/>
     </div>
   </div>
