@@ -79,8 +79,7 @@ export default {
       const listRecc = []
       if (this.f.isDoing.val) {
         if (this.f.isConsulting) listRecc.push(this.foodRecc.isCheckPeriodically.rec)
-        else {
-          console.log('ke else')
+        else if (!this.f.isConsulting && this.f.isConsulting !== null) {
           listRecc.push(this.foodRecc.isCheckHomeCare.rec)
         }
       }
